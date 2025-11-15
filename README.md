@@ -12,10 +12,10 @@ python -m venv venv
 ./venv/Scripts/Activate.ps1
 ```
 
-2. Установить зависимости(библиотеки) из файла requirments.txt
+2. Установить зависимости(библиотеки) из файла requirements.txt
 
 ```
-pip install -r requirments.txt
+pip install -r requirements.txt
 ```
 
 3. Зайти в любой python файл.
@@ -52,7 +52,7 @@ if __name__ == "__main__":
 ### Как добавить зависимость/библиотеку:
 
 1. копируем название зависимости(то, что испольуется при pip install)
-2. добавляем в конец requirments.txt новой строкой
+2. добавляем в конец requirements.txt новой строкой
 
 ### Как_сделать_коммит:
 
@@ -84,3 +84,4 @@ if __name__ == "__main__":
 5. Теперь на кнопку Pull
 
 ![alt text](readme_recourses/pull.png)
+

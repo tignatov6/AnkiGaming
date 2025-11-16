@@ -22,11 +22,11 @@ pip install -r requirements.txt
 
 4. нажать сюда.
 
-![alt text](readme_recourses/select_interpreter.png)
+![alt text](.readme_recourses/select_interpreter.png)
 
 5. Выбрать рекомендованый вариант с (venv)
 
-![alt text](readme_recourses/select_interpreter2.png)
+![alt text](.readme_recourses/select_interpreter2.png)
 
 6. Писать код.
 
@@ -60,7 +60,7 @@ if __name__ == "__main__":
 
 2. Нажимаешь Add file -> Upload Files
 
-![alt text](readme_recourses/Add_file_and_Upload_Files.png)
+![alt text](.readme_recourses/Add_file_and_Upload_Files.png)
 
 3. Заргужаешь файл, разработкой которого занимаешься.
 
@@ -79,9 +79,9 @@ if __name__ == "__main__":
 
 4. Нажми сюда.
 
-![alt text](readme_recourses/source_control.png)
+![alt text](.readme_recourses/source_control.png)
 
 5. Теперь на кнопку Pull
 
-![alt text](readme_recourses/pull.png)
+![alt text](.readme_recourses/pull.png)
 

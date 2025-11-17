@@ -1,3 +1,10 @@
+# То что не хотим добавлять в репозиторий
+builds/
+config.yaml
+
+
+
+
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
 
@@ -13,7 +20,6 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
-builds/
 develop-eggs/
 dist/
 downloads/
@@ -175,3 +181,4 @@ poetry.toml
 pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python
+

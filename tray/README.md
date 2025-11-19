@@ -1,5 +1,5 @@
 tray.py - модуль ответсвенный за иконку приложения в трее.
 
-![alt text](../.readme_recourses/tray.png)
+![alt text](../.readme_resources/tray.png)
 
 Должна быть возможность добавить кнопки: Выход, Открыть.

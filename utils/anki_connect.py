@@ -1,47 +1,130 @@
 import requests
+import json
 
 class AnkiConnect():
-    def __init__(self):
+    def __init__(self, anki_address='http://localhost:8765'):
+        self.anki_address = anki_address
         pass
 
     def version(self):
-        pass
+        """
+        :return: :class:`str` object
+        :rtype: API version number
+        
+        """
+        return self.send_request("version")
 
     def requestPermission(self, origin, allowed):
-        pass
+        """
+        :return: :class:`str` object
+        :rtype: permission
 
+        :return: :class:`bool` object
+        :rtype: requireApikey
+
+        :return: :class:`int` object
+        :rtype: version
+        """
+
+        result = self.send_request("requestPermission",origin=origin, allowed=allowed)
+        return result['permission'], result['requireApikey'], result['version']
+        
     def getProfiles(self):
-        pass
+        """
+        :return: :class:`list[str]` object
+        :rtype: profiles list
+        """
+        result = self.send_request('getProfiles')
+        return result
 
     def getActiveProfile(self):
-        pass
+        """
+        :return: :class:`str` object
+        :rtype: profile name
+        """
+        result = self.send_request("getActiveProfile")
+        return result
 
     def loadProfile(self, name):
-        pass
+        """
+        Загружает профиль с определённым именем.
+
+        :return: :class:`bool` object
+        :rtype: success
+        """
+
+        result = self.send_request("loadProfile",name=name)
+        return result
 
     def sync(self):
-        pass
+        """
+        Синхронизировать коллекции(колоды и карточки)
+        """
+        self.send_request("sync")
 
     def multi(self, actions):
-        pass
+        """
+        Выполняет несколько действий в одном запросе (batch processing).
+        Это значительно повышает производительность при выполнении множества операций.
+        
+        :param actions: Список действий для выполнения. Каждое действие — это словарь 
+                        с ключами 'action', 'params' (опционально) и 'version' (опционально)
+        :type actions: list[dict]
+        :return: Список результатов для каждого действия в том же порядке
+        :rtype: list[Any]
+        """
+        result = self.send_request("multi", actions=actions)
+        return result
 
     def getNumCardsReviewedToday(self):
-        pass
+        """
+        :return: :class:`int` object
+        :rtype: number of cards
+        """
+        result = self.send_request("getNumCardsReviewedToday")
+        return result
 
     def getNumCardsReviewedByDay(self):
-        pass
+        """
+        :return: :class:`list[list[str,int]]` object
+        :rtype: list of lists with date and number of reviewed cards
+        """
+        result = self.send_request("getNumCardsReviewedByDay")
+        return result
 
     def getCollectionStatsHTML(self, wholeCollection=True):
-        pass
+        """
+        :return: :class:`str` object
+        :rtype: HTML stats of Collection ¯\_(ツ)_/¯
+        """
+        result = self.send_request("getCollectionStatsHTML")
+        return result
 
     def deckNames(self):
-        pass
+        """
+        :return: :class:`list[str]` object
+        :rtype: list of all deck names
+        """
+        result = self.send_request("deckNames")
+        return result
 
     def deckNamesAndIds(self):
-        pass
+        """
+        :return: :class:`dict[deck_name]: id` object
+        :rtype: dict of all deck names as keys and ids as values
+        """
+        result = self.send_request("deckNamesAndIds")
+        return result
 
     def getDecks(self, cards):
-        pass
+        """
+        Принимает список карт, а выдаёт ⬇️
+
+        :return: :class:`dict[deck]: list[card]` object
+        :rtype: dict of all deck names as keys and cards as values
+        """
+        result = self.send_request("getDecks",cards=cards)
+        return result
 
     def createDeck(self, deck):
         pass
@@ -367,9 +450,70 @@ class AnkiConnect():
     def apiReflect(self, scopes=None, actions=None):
         pass
 
+    def send_request(self, action, **params):
+        """
+        Метод для отправки запросов.
+        
+        Возвращает: response.json()['result'] или None
+        """
+        payload = {
+            "action": action,
+            "version": 6,
+            "params": params
+        }
+        
+        try:
+            response = requests.post(self.anki_address, json=payload, timeout=10)
+            response.raise_for_status()
+            data = response.json()
+            if data.get('error'):
+                raise Exception(f"AnkiConnect error: {data['error']}")
+            return data['result']
+        except requests.exceptions.ConnectionError:
+            print("❌ Ошибка: Не удалось подключиться к Anki. Убедитесь, что Anki запущен с плагином AnkiConnect.")
+            return None
+        except requests.exceptions.Timeout:
+            print("❌ Ошибка: Таймаут запроса.")
+            return None
+        except json.JSONDecodeError:
+            print("❌ Ошибка: Сервер вернул не-JSON ответ.")
+            return None
+
+
 def hi():
     print(f'hi from {__name__}')
 
 
 if __name__ == "__main__":
     hi()
+    actions = [
+    {
+        "action": "version",
+        "params": {}
+    },
+    {
+        "action": "deckNames",
+        "params": {}
+    },
+    {
+        "action": "getProfiles",
+        "params": {}
+    }
+    ]
+    anki = AnkiConnect()
+
+    print(anki.send_request("version"))
+    print(anki.version())
+    print(anki.send_request("deckNames"))
+    print(anki.requestPermission('',True))
+    print(anki.getProfiles())
+    print(anki.getActiveProfile())
+    print(anki.loadProfile(anki.getProfiles()[0]))
+    anki.sync()
+    print(anki.multi(actions))
+    print(anki.getNumCardsReviewedToday())
+    print(anki.getNumCardsReviewedByDay())
+    print(anki.getCollectionStatsHTML())
+    print(anki.deckNames())
+    print(anki.deckNamesAndIds())
+    print(anki.getDecks(['1']))

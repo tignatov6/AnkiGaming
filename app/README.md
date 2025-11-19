@@ -2,8 +2,8 @@ app.py - модуль ответсвенный за открытие окна п
 
 Концепт 1(реализовывать в первую очередь) - глобальный профиль. То что ручкой - относится к концепту 2.
 
-![alt text](../.readme_recourses/app_concept1.png)
+![alt text](../.readme_resources/app_concept1.png)
 
 Концепт 2 - свой профиль для каждого добавленного исполняемого файла(имени исполняемого файла).
 
-![alt text](../.readme_recourses/app_concept2.png)
+![alt text](../.readme_resources/app_concept2.png)

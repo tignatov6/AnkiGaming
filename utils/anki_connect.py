@@ -95,7 +95,7 @@ class AnkiConnect():
     def getCollectionStatsHTML(self, wholeCollection=True):
         """
         :return: :class:`str` object
-        :rtype: HTML stats of Collection ¯\_(ツ)_/¯
+        :rtype: HTML stats of Collection `¯\_(ツ)_/¯`
         """
         result = self.send_request("getCollectionStatsHTML")
         return result
@@ -127,16 +127,33 @@ class AnkiConnect():
         return result
 
     def createDeck(self, deck):
-        pass
+        """
+        Создаёт колоду
+
+        :return: :class:`int` object
+        :rtype: The ID of the created deck.
+        """
+        result = self.send_request("createDeck",deck=deck)
+        return result
 
     def changeDeck(self, cards, deck):
-        pass
+        """
+        Меняет колоду `¯\_(ツ)_/¯`
+        """
+        self.send_request("changeDeck",cards=cards,deck=deck)
 
     def deleteDecks(self, decks, cardsToo=False):
-        pass
+        """
+        Удаляет колоду и карты если cardsToo=True
+        """
+        self.send_request("deleteDecks",cards=decks,cardsToo=cardsToo)
 
     def getDeckConfig(self, deck):
-        pass
+        """
+        Получить конфиг колоды
+        """
+        result = self.send_request("createDeck",deck=deck)
+        return result
 
     def saveDeckConfig(self, config):
         pass
@@ -516,4 +533,3 @@ if __name__ == "__main__":
     print(anki.getCollectionStatsHTML())
     print(anki.deckNames())
     print(anki.deckNamesAndIds())
-    print(anki.getDecks(['1']))

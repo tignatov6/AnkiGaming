@@ -1,2 +1,6 @@
 PyYAML
 requests
+pywin32
+psutil
+pyautogui
+pillow

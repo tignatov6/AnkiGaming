@@ -1,6 +1,9 @@
 import requests
 import json
 
+def hi():
+    print(f'hi from {__name__}')
+
 class AnkiConnect():
     """
     Класс-обертка для взаимодействия с Anki через плагин AnkiConnect.
@@ -882,6 +885,32 @@ class AnkiConnect():
         except Exception as e:
             print(f"❌ Произошла ошибка: {e}")
             return None
+        
+    def get_next_scheduled_card(self, deck_name):
+        """
+        Получает следующую карточку из колоды, которую Anki показал бы пользователю.
+        
+        Args:
+            deck_name (str): Имя колоды
+            
+        Returns:
+            dict or None: Данные карточки (question, answer, fields и т.д.) или None, 
+                        если в колоде нет карточек для повторения
+        """
+        import time
+        
+        # 1. Запускаем режим обзора - это заставляет планировщик Anki выбрать следующую карточку
+        #    из очереди (учитывая learning/review/new cards, лимиты и burying)
+        self.guiDeckReview(deck_name)
+        
+        # 3. Получаем текущую карточку, которую выбрал планировщик
+        card_info = self.guiCurrentCard()
+        
+        if not card_info:
+            print(f"В колоде '{deck_name}' нет карточек для повторения.")
+            return None
+            
+        return card_info
 
 
 if __name__ == "__main__":

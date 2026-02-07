@@ -4,3 +4,11 @@ pywin32
 psutil
 pyautogui
 pillow
+mss
+numpy
+opencv-python
+onnxruntime
+screeninfo
+PyQt5 
+keyboard
+PyQtWebEngine
